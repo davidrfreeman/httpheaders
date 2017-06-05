@@ -16,6 +16,8 @@ app.use(cors({optionSuccessStatus: 200}));  // some legacy browsers choke on 204
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 
+app.enable('trust proxy');
+
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
@@ -29,10 +31,11 @@ app.get("/api/hello", (req, res) => {
 
 app.get("/api/httpheaders", (req, res) => {
 
-  let ipAddress = req.ip;
+  let ipaddress = req.ip;
   let software = req.headers['user-agent'];
+  let lan = req.headers['accept-language'];
 
-  res.json({software: software, ip: ipAddress});
+  res.json({software: software, language: lan, ipaddress: ipaddress});
 
 });
 
